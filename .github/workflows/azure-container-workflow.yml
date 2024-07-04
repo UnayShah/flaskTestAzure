@@ -14,14 +14,16 @@ jobs:
       uses: actions/checkout@v4
 
     - name: 'Login via Azure CLI'
+      id: azure-login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Build and deploy Container App
-      uses: azure/container-apps-deploy-action@v1
+      uses: azure/cli@v2
       with:
-        appSourcePath: ${{ github.workspace }}
-        acrName: pythonTestWizerr
-        containerAppName: python-test-wizerr
-        resourceGroup: wizerr-dev
+        azcliversion: latest
+        inlineScript: |
+          az account show
+          az storage -h
+          az containerapp up --resource-group wizerr-dev --name python-test-wizerr  --ingress external --target-port 5000 --source .

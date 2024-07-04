@@ -14,7 +14,7 @@ pool = SimpleConnectionPool(1, 3, database=environ['POSTGRES_DATABASE'],
 
 @app.route('/', methods=['GET'])
 def index():
-    return 'New build for testing 4'
+    return 'New build for testing 5'
 
 
 @app.route('/db', methods=['GET'])
